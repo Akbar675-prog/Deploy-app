@@ -14,20 +14,33 @@ export async function POST(request) {
     const userAgent = formData.get('userAgent');
 
     if (!websiteName || !file) {
-      return new Response(JSON.stringify({ error: "Lengkapi semua field" }), {
+      return new Response(JSON.stringify({ error: "Lengkapi nama dan file" }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
-    const arrayBuffer = await file.arrayBuffer();
-    const zip = new AdmZip(Buffer.from(arrayBuffer));
-    const entries = zip.getEntries();
+    const fileName = file.name.toLowerCase();
+    let entries = [];
 
+    // === PROSES FILE ===
+    if (fileName.endsWith('.zip')) {
+      const arrayBuffer = await file.arrayBuffer();
+      const zip = new AdmZip(Buffer.from(arrayBuffer));
+      entries = zip.getEntries();
+    } 
+    else if (fileName.endsWith('.html') || fileName.endsWith('.htm')) {
+      const content = await file.text();
+      entries = [{ entryName: 'index.html', getData: () => Buffer.from(content) }];
+    } 
+    else {
+      return new Response(JSON.stringify({ error: "Hanya .zip atau .html" }), { status: 400 });
+    }
+
+    // === GITHUB ===
     const octokit = new Octokit({ auth: GITHUB_TOKEN });
-
-    // Buat repo
     let repo;
+
     try {
       const res = await octokit.repos.create({ name: websiteName, auto_init: false, private: false });
       repo = res.data;
@@ -38,7 +51,7 @@ export async function POST(request) {
       } else throw err;
     }
 
-    // Upload file
+    // === UPLOAD FILE ===
     for (const entry of entries) {
       if (entry.isDirectory) continue;
       const path = entry.entryName;
@@ -54,7 +67,7 @@ export async function POST(request) {
       });
     }
 
-    // Deploy ke Vercel
+    // === VERCEL ===
     const vercelRes = await fetch('https://api.vercel.com/v1/projects', {
       method: 'POST',
       headers: {
@@ -68,11 +81,12 @@ export async function POST(request) {
     });
 
     let vercelUrl = `https://${websiteName}.vercel.app`;
-    if (!vercelRes.ok && (await vercelRes.json()).error?.code !== 'project_exists') {
-      throw new Error('Gagal deploy ke Vercel');
+    if (!vercelRes.ok) {
+      const err = await vercelRes.json();
+      if (err.error?.code !== 'project_exists') throw new Error(err.error?.message || 'Vercel gagal');
     }
 
-    // Kirim ke Telegram
+    // === TELEGRAM ===
     const message = `
 *Permintaan Pembuatan Website Baru*
 
@@ -102,6 +116,7 @@ Website dibuat melalui *Publish Swamp Platform*.
     });
 
   } catch (error) {
+    console.error(error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
