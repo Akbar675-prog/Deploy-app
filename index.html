@@ -3,552 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Swamp Deploy - Create Website Instan</title>
+  <title>Swamp deploy - Create Website Instan</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --error: #ef4444;
-        }
-
-        body {
-            background: var(--gradient);
-            color: var(--dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-            z-index: -1;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 70px;
-            height: 70px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 15px;
-        }
-
-        .logo-icon i {
-            font-size: 32px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 1px;
-        }
-
-        .logo-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            width: 100%;
-            margin-bottom: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-title i {
-            color: var(--primary);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark);
-            font-size: 14px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        .input-field:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
-        .input-field.error {
-            border-color: var(--error);
-        }
-
-        .file-upload {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .file-button {
-            background: var(--primary);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border: none;
-            font-size: 14px;
-        }
-
-        .file-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .file-name {
-            color: var(--gray);
-            font-size: 14px;
-            text-align: center;
-            padding: 10px;
-            background: #f1f5f9;
-            border-radius: 8px;
-            border: 1px dashed #cbd5e1;
-            transition: all 0.3s;
-        }
-
-        .file-name.error {
-            border-color: var(--error);
-            color: var(--error);
-            background: #fef2f2;
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .create-button {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.3);
-        }
-
-        .create-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
-        }
-
-        .create-button:active {
-            transform: translateY(-1px);
-        }
-
-        .create-button:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .feature {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s;
-        }
-
-        .feature:hover {
-            transform: translateY(-3px);
-        }
-
-        .feature i {
-            font-size: 24px;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .feature-text {
-            font-size: 12px;
-            color: var(--dark);
-            font-weight: 500;
-        }
-
-        /* Popup Styles */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .popup {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            animation: popIn 0.4s ease-out;
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .popup-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: var(--gray);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .popup-close:hover {
-            color: var(--dark);
-        }
-
-        .popup-icon {
-            font-size: 50px;
-            color: var(--secondary);
-            margin-bottom: 15px;
-        }
-
-        .popup-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .popup-message {
-            color: var(--gray);
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .website-link-container {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .website-link {
-            font-size: 14px;
-            color: var(--primary);
-            font-weight: 500;
-            word-break: break-all;
-            text-align: left;
-            flex: 1;
-        }
-
-        .website-link a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .website-link a:hover {
-            text-decoration: underline;
-        }
-
-        .copy-button {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
-        }
-
-        .copy-button:hover {
-            background: #0da271;
-            transform: translateY(-2px);
-        }
-
-        .popup-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin: 0 auto;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .popup-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .popup-button.secondary:hover {
-            background: #0da271;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 12px;
-            color: white;
-            font-weight: 500;
-            box-shadow: var(--shadow);
-            z-index: 1000;
-            display: none;
-            animation: slideIn 0.3s ease-out;
-            max-width: 350px;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .success {
-            background: var(--secondary);
-        }
-
-        .error {
-            background: var(--error);
-        }
-
-        .info {
-            background: var(--primary);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                max-width: 100%;
-            }
-            
-            .card {
-                padding: 25px 20px;
-            }
-            
-            .logo-text {
-                font-size: 24px;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-            }
-            
-            .popup {
-                width: 95%;
-                padding: 20px;
-            }
-        }
-
-        /* Floating animation for background elements */
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% { transform: translate(0, 0px); }
-            50% { transform: translate(0, 15px); }
-            100% { transform: translate(0, -0px); }
-        }
-
-        /* Code Viewer Styles */
-        .code-popup {
-            max-width: 600px;
-        }
-
-        .code-content {
-            background: #1e293b;
-            color: #e2e8f0;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: left;
-            max-height: 300px;
-            overflow-y: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .code-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--dark);
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    :root {
+      --primary: #6366f1; --primary-dark: #4f46e5; --secondary: #10b981;
+      --dark: #1e293b; --light: #f8fafc; --gray: #64748b;
+      --card-bg: rgba(255, 255, 255, 0.95); --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --error: #ef4444;
+    }
+    body {
+      background: var(--gradient); color: var(--dark); min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 20px; position: relative; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      z-index: -1;
+    }
+    .container { width: 100%; max-width: 480px; margin: 0 auto; }
+    .logo { text-align: center; margin-bottom: 30px; }
+    .logo-icon { display: inline-flex; align-items: center; justify-content: center; width: 70px; height: 70px; background: var(--card-bg); border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 15px; }
+    .logo-icon i { font-size: 32px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo-text { font-size: 28px; font-weight: 700; color: white; letter-spacing: 1px; }
+    .logo-subtitle { color: rgba(255, 255, 255, 0.8); font-size: 14px; margin-top: 5px; font-weight: 400; }
+    .card { background: var(--card-bg); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); margin-bottom: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); transition: transform 0.3s, box-shadow 0.3s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15); }
+    .card-title { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: var(--dark); display: flex; align-items: center; gap: 10px; }
+    .card-title i { color: var(--primary); }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--dark); font-size: 14px; }
+    .input-field { width: 100%; padding: 15px 20px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; transition: all 0.3s; background: white; }
+    .input-field:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+    .input-field.error { border-color: var(--error); }
+    .file-upload { display: flex; flex-direction: column; gap: 10px; }
+    .file-input { display: none; }
+    .file-button { background: var(--primary); color: white; padding: 12px 20px; border-radius: 12px; cursor: pointer; font-weight: 500; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; font-size: 14px; }
+    .file-button:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .file-name { color: var(--gray); font-size: 14px; text-align: center; padding: 10px; background: #f1f5f9; border-radius: 8px; border: 1px dashed #cbd5e1; transition: all 0.3s; }
+    .file-name.error { border-color: var(--error); color: var(--error); background: #fef2f2; }
+    .error-message { color: var(--error); font-size: 12px; margin-top: 5px; display: none; }
+    .create-button { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.3); }
+    .create-button:hover { background: var(--primary-dark); transform: translateY(-3px); }
+    .create-button:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
+    .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 25px; }
+    .feature { background: rgba(255, 255, 255, 0.7); border-radius: 12px; padding: 15px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); transition: transform 0.3s; }
+    .feature:hover { transform: translateY(-3px); }
+    .feature i { font-size: 24px; color: var(--primary); margin-bottom: 8px; }
+    .feature-text { font-size: 12px; color: var(--dark); font-weight: 500; }
+    .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 1000; }
+    .popup { background: var(--card-bg); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); width: 90%; max-width: 400px; text-align: center; position: relative; }
+    .popup-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 20px; color: var(--gray); cursor: pointer; }
+    .popup-icon { font-size: 50px; color: var(--secondary); margin-bottom: 15px; }
+    .popup-title { font-size: 20px; font-weight: 600; margin-bottom: 15px; color: var(--dark); }
+    .popup-message { color: var(--gray); margin-bottom: 20px; font-size: 14px; }
+    .website-link-container { background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .website-link { font-size: 14px; color: var(--primary); font-weight: 500; word-break: break-all; text-align: left; flex: 1; }
+    .website-link a { color: var(--primary); text-decoration: none; }
+    .website-link a:hover { text-decoration: underline; }
+    .copy-button { background: var(--secondary); color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 5px; }
+    .copy-button:hover { background: #0da271; transform: translateY(-2px); }
+    .popup-button { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto; width: 100%; margin-bottom: 10px; }
+    .popup-button:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .notification { position: fixed; top: 20px; right: 20px; padding: 15px 25px; border-radius: 12px; color: white; font-weight: 500; box-shadow: var(--shadow); z-index: 1000; display: none; max-width: 350px; }
+    .success { background: var(--secondary); }
+    .error { background: var(--error); }
+    .footer { text-align: center; margin-top: 30px; color: rgba(255, 255, 255, 0.7); font-size: 14px; }
+    @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo floating">
-      <div class="logo-icon">
-        <i class="fas fa-cloud-upload-alt"></i>
-      </div>
-      <div class="logo-text">Swamp Deploy</div>
+    <div class="logo">
+      <div class="logo-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+      <div class="logo-text">Swamp deploy</div>
       <div class="logo-subtitle">Create website Anda dalam hitungan detik</div>
     </div>
     
@@ -558,19 +89,19 @@
       <form id="websiteForm">
         <div class="form-group">
           <label for="websiteName">Nama Website</label>
-          <input type="text" id="websiteName" class="input-field" placeholder="contoh: website-saya" required>
+          <input type="text" id="websiteName" class="input-field" placeholder="contoh: portfolio-saya" required>
           <div class="error-message" id="websiteNameError">Harap di isi dulu</div>
         </div>
         
         <div class="form-group">
-          <label for="zipFile">Unggah File ZIP Proyek</label>
+          <label for="fileInput">Unggah File</label>
           <div class="file-upload">
-            <input type="file" id="zipFile" class="file-input" accept=".zip" required>
+            <input type="file" id="fileInput" class="file-input" accept=".zip,.html,.htm" required>
             <button type="button" class="file-button" id="fileButton">
-              <i class="fas fa-file-upload"></i> Pilih File ZIP
+              <i class="fas fa-file-upload"></i> Pilih File
             </button>
             <span class="file-name" id="fileName">Belum ada file dipilih</span>
-            <div class="error-message" id="fileError">Harap di isi dulu</div>
+            <div class="error-message" id="fileError">Harap pilih file</div>
           </div>
         </div>
         
@@ -587,26 +118,22 @@
       </div>
     </div>
     
-    <div class="footer">
-      © 2025 Swamp Deploy — Deploy instan via Vercel
-    </div>
+    <div class="footer">© 2025 Swamp deploy — Deploy via Vercel</div>
   </div>
 
-  <!-- Popup Success -->
+  <!-- Success Popup -->
   <div class="popup-overlay" id="successPopup">
     <div class="popup">
       <button class="popup-close" id="popupClose"><i class="fas fa-times"></i></button>
       <div class="popup-icon"><i class="fas fa-check-circle"></i></div>
       <h2 class="popup-title">Website Berhasil Dibuat!</h2>
       <p class="popup-message">Website Anda telah berhasil di-deploy.</p>
-      
       <div class="website-link-container">
         <div class="website-link">
           <a id="websiteUrl" href="#" target="_blank">https://<span id="urlWebsiteName">nama</span>.vercel.app</a>
         </div>
         <button class="copy-button" id="copyButton"><i class="fas fa-copy"></i> Salin</button>
       </div>
-      
       <button class="popup-button" id="newWebsiteButton"><i class="fas fa-plus"></i> Buat Baru</button>
     </div>
   </div>
@@ -614,97 +141,71 @@
   <div class="notification" id="notification"></div>
 
   <script>
-    const websiteForm = document.getElementById('websiteForm');
-    const websiteNameInput = document.getElementById('websiteName');
-    const zipFileInput = document.getElementById('zipFile');
+    const form = document.getElementById('websiteForm');
+    const nameInput = document.getElementById('websiteName');
+    const fileInput = document.getElementById('fileInput');
     const fileButton = document.getElementById('fileButton');
-    const fileNameSpan = document.getElementById('fileName');
-    const createButton = document.getElementById('createButton');
-    const successPopup = document.getElementById('successPopup');
-    const popupClose = document.getElementById('popupClose');
-    const websiteUrl = document.getElementById('websiteUrl');
-    const urlWebsiteName = document.getElementById('urlWebsiteName');
-    const copyButton = document.getElementById('copyButton');
-    const newWebsiteButton = document.getElementById('newWebsiteButton');
-    const notification = document.getElementById('notification');
+    const fileName = document.getElementById('fileName');
+    const createBtn = document.getElementById('createButton');
+    const popup = document.getElementById('successPopup');
+    const urlSpan = document.getElementById('urlWebsiteName');
+    const urlLink = document.getElementById('websiteUrl');
+    const copyBtn = document.getElementById('copyButton');
+    const newBtn = document.getElementById('newWebsiteButton');
+    const notif = document.getElementById('notification');
 
-    fileButton.addEventListener('click', () => zipFileInput.click());
+    fileButton.onclick = () => fileInput.click();
+    fileInput.onchange = () => {
+      const f = fileInput.files[0];
+      fileName.innerHTML = f ? `<i class="fas fa-check-circle"></i> ${f.name}` : 'Belum ada file';
+      fileName.style.color = f ? '#10b981' : '#64748b';
+    };
 
-    zipFileInput.addEventListener('change', function() {
-      if (this.files[0]) {
-        fileNameSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${this.files[0].name}`;
-        fileNameSpan.style.color = '#10b981';
-      } else {
-        fileNameSpan.textContent = 'Belum ada file dipilih';
-        fileNameSpan.style.color = '#64748b';
-      }
-    });
-
-    websiteForm.addEventListener('submit', async function(e) {
+    form.onsubmit = async (e) => {
       e.preventDefault();
-      const websiteName = websiteNameInput.value.trim();
-      const file = zipFileInput.files[0];
+      const name = nameInput.value.trim();
+      const file = fileInput.files[0];
+      if (!name || !file) return showNotif('Lengkapi semua field!', 'error');
+      if (!/^[a-zA-Z0-9-]+$/.test(name)) return showNotif('Nama hanya huruf, angka, tanda hubung', 'error');
 
-      if (!websiteName || !file) {
-        showNotification('Lengkapi semua field!', 'error');
-        return;
-      }
+      createBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deploying...';
+      createBtn.disabled = true;
 
-      if (!/^[a-zA-Z0-9-]+$/.test(websiteName)) {
-        showNotification('Nama hanya boleh huruf, angka, dan tanda hubung', 'error');
-        return;
-      }
-
-      createButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deploying...';
-      createButton.disabled = true;
-
-      const formData = new FormData();
-      formData.append('websiteName', websiteName);
-      formData.append('file', file);
-      formData.append('userAgent', navigator.userAgent);
+      const fd = new FormData();
+      fd.append('websiteName', name);
+      fd.append('file', file);
+      fd.append('userAgent', navigator.userAgent);
 
       try {
-        const res = await fetch('/api/telegram.js', { method: 'POST', body: formData });
+        const res = await fetch('/api/telegram.js', { method: 'POST', body: fd });
         const data = await res.json();
-
         if (res.ok) {
-          urlWebsiteName.textContent = websiteName;
-          websiteUrl.href = data.url;
-          successPopup.style.display = 'flex';
-          showNotification('Deploy berhasil!', 'success');
-          resetForm();
-        } else {
-          showNotification(data.error, 'error');
-        }
-      } catch (err) {
-        showNotification('Koneksi gagal', 'error');
-      } finally {
-        createButton.innerHTML = '<i class="fas fa-plus-circle"></i> Deploy ke Vercel';
-        createButton.disabled = false;
+          urlSpan.textContent = name;
+          urlLink.href = data.url;
+          popup.style.display = 'flex';
+          showNotif('Deploy berhasil!', 'success');
+          form.reset(); fileName.textContent = 'Belum ada file'; fileName.style.color = '#64748b';
+        } else showNotif(data.error, 'error');
+      } catch { showNotif('Koneksi gagal', 'error'); }
+      finally {
+        createBtn.innerHTML = '<i class="fas fa-plus-circle"></i> Deploy ke Vercel';
+        createBtn.disabled = false;
       }
-    });
+    };
 
-    function resetForm() {
-      websiteForm.reset();
-      fileNameSpan.textContent = 'Belum ada file dipilih';
-      fileNameSpan.style.color = '#64748b';
+    function showNotif(msg, type) {
+      notif.textContent = msg; notif.className = `notification ${type}`; notif.style.display = 'block';
+      setTimeout(() => notif.style.display = 'none', 5000);
     }
 
-    function showNotification(msg, type) {
-      notification.textContent = msg;
-      notification.className = `notification ${type}`;
-      notification.style.display = 'block';
-      setTimeout(() => notification.style.display = 'none', 5000);
-    }
-
-    popupClose.onclick = () => successPopup.style.display = 'none';
-    newWebsiteButton.onclick = () => { successPopup.style.display = 'none'; websiteForm.scrollIntoView(); };
-    copyButton.onclick = () => {
-      navigator.clipboard.writeText(websiteUrl.href).then(() => {
-        copyButton.innerHTML = '<i class="fas fa-check"></i> Tersalin';
-        setTimeout(() => copyButton.innerHTML = '<i class="fas fa-copy"></i> Salin', 2000);
+    document.getElementById('popupClose').onclick = () => popup.style.display = 'none';
+    newBtn.onclick = () => { popup.style.display = 'none'; form.scrollIntoView(); };
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(urlLink.href).then(() => {
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin';
+        setTimeout(() => copyBtn.innerHTML = '<i class="fas fa-copy"></i> Salin', 2000);
       });
     };
   </script>
 </body>
-  </html>
+</html>
